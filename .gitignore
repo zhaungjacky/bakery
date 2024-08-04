@@ -21,7 +21,7 @@ firebase.json
 android/
 build/
 ios/
-lib/firebase_option.dart
+lib/firebase_options.dart
 test/
 
 # The .vscode folder contains launch configuration and tasks you configure in
