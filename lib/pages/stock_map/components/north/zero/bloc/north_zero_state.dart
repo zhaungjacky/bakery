@@ -1,4 +1,4 @@
-part of 'north_bloc.dart';
+part of 'north_zero_bloc.dart';
 
 @immutable
 sealed class NorthZeroState {
@@ -8,7 +8,7 @@ sealed class NorthZeroState {
 final class NorthZeroInitial extends NorthZeroState {}
 
 class NorthZeroSuccessState extends NorthZeroState {
-  final List<MapData> mapData;
+  final List<ZoneList> mapData;
 
   const NorthZeroSuccessState({required this.mapData});
 }

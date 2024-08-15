@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:superstore/pages/stock_map/components/north/zero/bloc/north_bloc.dart';
+import 'package:superstore/pages/stock_map/components/north/zero/bloc/north_zero_bloc.dart';
 import 'package:superstore/services/map/data-repo/map_data_repo.dart';
 import 'package:superstore/services/models/map_data.dart';
 
@@ -10,7 +10,7 @@ part 'north_one_event.dart';
 part 'north_one_state.dart';
 
 class NorthOneBloc extends Bloc<NorthOneEvent, NorthOneState> {
-  late final StreamSubscription _streamSubscription;
+  late StreamSubscription _streamSubscription;
 
   final MapDataRepo _mapDataRepo;
 
@@ -20,10 +20,10 @@ class NorthOneBloc extends Bloc<NorthOneEvent, NorthOneState> {
         super(NorthOneInitial()) {
     _streamSubscription = _mapDataRepo
         .getMapData(
-      SectionZones.northOne.toString(),
+      SectionZones.northOne.name,
     )
         .listen((event) {
-      final lists = event.docs.map((item) => MapData.fromJson(item)).toList();
+      final lists = event.docs.map((item) => ZoneList.fromJson(item)).toList();
       add(
         NorthOneLoadingEvent(data: lists),
       );
@@ -34,10 +34,36 @@ class NorthOneBloc extends Bloc<NorthOneEvent, NorthOneState> {
       ),
     );
     on<NorthOneLoadingEvent>(_loadingNorthMap);
+    on<NorthOneUpdateIsCategoryEvent>(_updateIsCategory);
+    on<NorthOneRefreshCategoryEvent>(_refresh);
   }
 
   _loadingNorthMap(NorthOneLoadingEvent event, Emitter emit) {
     emit(NorthOneSuccessState(mapData: event.data));
+  }
+
+  _updateIsCategory(NorthOneUpdateIsCategoryEvent event, Emitter emit) {
+    emit(
+      NorthOneSuccessState(mapData: event.mapData),
+    );
+  }
+
+  _refresh(NorthOneRefreshCategoryEvent event, Emitter emit) async {
+    await _streamSubscription.cancel();
+    _streamSubscription =
+        _mapDataRepo.getMapData(SectionZones.northOne.name).listen((event) {
+      final data = event.docs
+          .map(
+            (map) => ZoneList.fromJson(map),
+          )
+          .toList();
+
+      add(
+        NorthOneLoadingEvent(
+          data: data,
+        ),
+      );
+    });
   }
 
   @override

@@ -5,8 +5,8 @@ import 'package:meta/meta.dart';
 import 'package:superstore/services/map/data-repo/map_data_repo.dart';
 import 'package:superstore/services/models/map_data.dart';
 
-part 'north_event.dart';
-part 'north_state.dart';
+part 'north_zero_event.dart';
+part 'north_zero_state.dart';
 
 enum SectionZones {
   west,
@@ -19,7 +19,7 @@ enum SectionZones {
 }
 
 class NorthZeroBloc extends Bloc<NorthZeroEvent, NorthZeroState> {
-  late final StreamSubscription _streamSubscription;
+  late StreamSubscription _streamSubscription;
 
   final MapDataRepo _mapDataRepo;
 
@@ -29,10 +29,10 @@ class NorthZeroBloc extends Bloc<NorthZeroEvent, NorthZeroState> {
         super(NorthZeroInitial()) {
     _streamSubscription = _mapDataRepo
         .getMapData(
-      SectionZones.northZero.toString(),
+      SectionZones.northZero.name,
     )
         .listen((event) {
-      final lists = event.docs.map((item) => MapData.fromJson(item)).toList();
+      final lists = event.docs.map((item) => ZoneList.fromJson(item)).toList();
       add(
         NorthZeroLoadingEvent(data: lists),
       );
@@ -43,10 +43,39 @@ class NorthZeroBloc extends Bloc<NorthZeroEvent, NorthZeroState> {
       ),
     );
     on<NorthZeroLoadingEvent>(_loadingNorthMap);
+    on<NorthZeroUpdateIsCategoryEvent>(_updateIsCategory);
+    on<NorthZeroRefreshCategoryEvent>(_refresh);
   }
 
   _loadingNorthMap(NorthZeroLoadingEvent event, Emitter emit) {
     emit(NorthZeroSuccessState(mapData: event.data));
+  }
+
+  _updateIsCategory(
+    NorthZeroUpdateIsCategoryEvent event,
+    Emitter emit,
+  ) {
+    emit(
+      NorthZeroSuccessState(mapData: event.data),
+    );
+  }
+
+  _refresh(NorthZeroRefreshCategoryEvent event, Emitter emit) async {
+    await _streamSubscription.cancel();
+    _streamSubscription =
+        _mapDataRepo.getMapData(SectionZones.northZero.name).listen((event) {
+      final data = event.docs
+          .map(
+            (map) => ZoneList.fromJson(map),
+          )
+          .toList();
+
+      add(
+        NorthZeroLoadingEvent(
+          data: data,
+        ),
+      );
+    });
   }
 
   @override

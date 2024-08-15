@@ -6,9 +6,11 @@ sealed class WestEvent {
 }
 
 class WestLoadEvent extends WestEvent {
-  final List<MapData> mapData;
+  final List<ZoneList> mapData;
 
-  const WestLoadEvent({required this.mapData});
+  const WestLoadEvent({
+    required this.mapData,
+  });
 }
 
 class WestAddEvent extends WestEvent {
@@ -16,3 +18,13 @@ class WestAddEvent extends WestEvent {
 
   const WestAddEvent({required this.data});
 }
+
+class WestUpdateIsCategoryEvent extends WestEvent {
+  final List<ZoneList> mapData;
+
+  const WestUpdateIsCategoryEvent({
+    required this.mapData,
+  });
+}
+
+class WestRefreshCategoryEvent extends WestEvent {}

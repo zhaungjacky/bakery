@@ -4,7 +4,13 @@ import 'package:superstore/pages/stock_map/components/north/one/bloc/north_one_b
 import 'package:superstore/pages/stock_map/components/north_south_component.dart';
 
 class NorthOneSectionPage extends StatelessWidget {
-  const NorthOneSectionPage({super.key});
+  const NorthOneSectionPage({
+    super.key,
+    required this.height,
+    required this.fontSize,
+  });
+  final double height;
+  final double fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +25,11 @@ class NorthOneSectionPage extends StatelessWidget {
             final items = state.mapData;
             // print(items[0].productName);
             // print(items[0].sectionId);
-            return NorthSouthComponentPage(items: items);
+            return NorthSouthComponentPage(
+              items: items,
+              height: height,
+              fontSize: fontSize,
+            );
           case NorthOneFailureState():
             return const Center(
               child: Text("error"),

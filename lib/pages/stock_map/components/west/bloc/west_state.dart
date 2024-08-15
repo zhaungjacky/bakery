@@ -8,9 +8,11 @@ sealed class WestState {
 final class WestInitial extends WestState {}
 
 class WestSuccessState extends WestState {
-  final List<MapData> mapData;
+  final List<ZoneList> mapData;
 
-  const WestSuccessState({required this.mapData});
+  const WestSuccessState({
+    required this.mapData,
+  });
 }
 
 class WestFailureState extends WestState {}
@@ -18,5 +20,7 @@ class WestFailureState extends WestState {}
 class WestErrorState extends WestState {
   final String message;
 
-  const WestErrorState({required this.message});
+  const WestErrorState({
+    required this.message,
+  });
 }

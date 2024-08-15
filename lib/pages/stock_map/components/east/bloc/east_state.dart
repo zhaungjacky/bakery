@@ -8,7 +8,7 @@ sealed class EastState {
 final class EastInitial extends EastState {}
 
 class EastSuccessState extends EastState {
-  final List<MapData> mapData;
+  final List<ZoneList> mapData;
 
   const EastSuccessState({required this.mapData});
 }

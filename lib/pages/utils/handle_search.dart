@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:superstore/pages/utils/my_material_button_widget.dart';
 
 Future<String?> handleSearchMap(
     BuildContext context, TextEditingController searchController,
-    [String? title]) {
+    [String? title, TextInputType? keyboardType]) {
   return showDialog(
     context: context,
     builder: (content) {
@@ -15,40 +16,65 @@ Future<String?> handleSearchMap(
             color: Theme.of(context).colorScheme.primary,
           ),
         ),
+        // content: const Column(
+        //   mainAxisSize: MainAxisSize.min,
+        //   children: [
+        //     Gap(8),
+        //   ],
+        // ),
         actions: [
-          TextField(
-            controller: searchController,
-            decoration: const InputDecoration(
-                helperText: "Search Content",
-                helperStyle: TextStyle(
-                  color: Colors.green,
-                  fontWeight: FontWeight.bold,
-                ),
-                hintText: "search content ..."),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          Column(
             children: [
-              MyMaterialButton(
-                onPressed: () {
-                  final val = searchController.text;
-                  Navigator.of(context).pop(val);
-                },
-                icon: const Icon(
-                  Icons.done,
-                  size: 32,
-                  color: Colors.green,
+              TextField(
+                controller: searchController,
+                decoration: const InputDecoration(
+                  label: Text(
+                    "Search Content",
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  hintText: "Content ...",
                 ),
+                keyboardType: keyboardType,
               ),
-              MyMaterialButton(
-                onPressed: () {
-                  Navigator.of(context).pop(null);
-                },
-                icon: const Icon(
-                  Icons.cancel,
-                  size: 32,
-                  color: Colors.red,
-                ),
+              const Gap(32),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  MyMaterialButton(
+                    onPressed: () {
+                      final val = searchController.text;
+                      Navigator.of(context).pop(val);
+                    },
+                    icon: const Icon(
+                      Icons.done,
+                      size: 32,
+                      color: Colors.green,
+                    ),
+                  ),
+                  MyMaterialButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(null);
+                    },
+                    icon: const Icon(
+                      Icons.cancel,
+                      size: 32,
+                      color: Colors.red,
+                    ),
+                  ),
+                  MyMaterialButton(
+                    onPressed: () {
+                      searchController.clear();
+                    },
+                    icon: const Icon(
+                      Icons.refresh,
+                      size: 32,
+                      color: Colors.teal,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

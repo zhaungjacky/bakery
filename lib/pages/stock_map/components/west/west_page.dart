@@ -5,7 +5,12 @@ import 'package:superstore/pages/stock_map/components/east_west_component_page.d
 
 class WestSectionPage extends StatelessWidget {
   final double width;
-  const WestSectionPage({super.key, required this.width});
+  final double fontSize;
+  const WestSectionPage({
+    super.key,
+    required this.width,
+    required this.fontSize,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +27,7 @@ class WestSectionPage extends StatelessWidget {
             return EastWestComponentPage(
               data: data,
               width: width,
+              fontSize: fontSize,
             );
           case WestFailureState():
             return const Center(

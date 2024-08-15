@@ -8,60 +8,87 @@ Future<dynamic> handleModifyMap(
     TextEditingController productIdController,
     TextEditingController sectionIdController,
     TextEditingController stockpileController,
+    TextEditingController indexController,
     MapData data,
     [String? title]) {
+  // print(data.productName);
   return showDialog(
     context: context,
     builder: (content) {
       return AlertDialog(
         title: Text(
-          title ?? "Modify Map Data ?",
+          title ?? "Modify Map Data?",
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Theme.of(context).colorScheme.primary,
           ),
         ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: productNameController,
+              decoration: const InputDecoration(
+                label: Text(
+                  "Product Name",
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            TextField(
+              controller: productIdController,
+              decoration: const InputDecoration(
+                label: Text(
+                  "Product ID",
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            TextField(
+              controller: indexController,
+              decoration: const InputDecoration(
+                label: Text(
+                  "Index",
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            TextField(
+              controller: sectionIdController,
+              decoration: const InputDecoration(
+                label: Text(
+                  "Section ID",
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            TextField(
+              controller: stockpileController,
+              decoration: const InputDecoration(
+                label: Text(
+                  "Stockpile",
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
         actions: [
-          TextField(
-            controller: productNameController,
-            decoration: const InputDecoration(
-              helperText: "Product Name",
-              helperStyle: TextStyle(
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          TextField(
-            controller: productIdController,
-            decoration: const InputDecoration(
-              helperText: "Product ID",
-              helperStyle: TextStyle(
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          TextField(
-            controller: sectionIdController,
-            decoration: const InputDecoration(
-              helperText: "Section ID",
-              helperStyle: TextStyle(
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          TextField(
-            controller: stockpileController,
-            decoration: const InputDecoration(
-              helperText: "Stockpile",
-              helperStyle: TextStyle(
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -71,7 +98,8 @@ Future<dynamic> handleModifyMap(
                     "projectName": productNameController.text,
                     "productId": productIdController.text,
                     "sectionId": sectionIdController.text,
-                    "stockpile": stockpileController.text,
+                    "stockpile": int.parse(stockpileController.text),
+                    "index": int.parse(indexController.text),
                   };
                   Navigator.of(context).pop(val);
                 },

@@ -6,7 +6,17 @@ sealed class SouthZeroEvent {
 }
 
 class SouthZeroLoadingEvent extends SouthZeroEvent {
-  final List<MapData> data;
+  final List<ZoneList> data;
 
   const SouthZeroLoadingEvent({required this.data});
 }
+
+class SouthZeroUpdateIsCategoryEvent extends SouthZeroEvent {
+  final List<ZoneList> data;
+
+  const SouthZeroUpdateIsCategoryEvent({
+    required this.data,
+  });
+}
+
+class SouthZeroRefreshCategoryEvent extends SouthZeroEvent {}

@@ -5,7 +5,7 @@ import 'package:superstore/pages/auth/bloc/auth_bloc.dart';
 import 'package:superstore/pages/stock_map/stock_map.dart';
 
 class AuthGate extends StatelessWidget {
-  static String path() => "/";
+  static String routhPath() => "/";
   const AuthGate({super.key});
 
   @override
